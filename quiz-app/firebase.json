@@ -1,0 +1,10 @@
+{
+  "hosting": [
+    {
+      "site": "quiz-dapp",
+      "public": "out",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "cleanUrls": true
+    }
+  ]
+}
