@@ -4,12 +4,13 @@ pragma solidity 0.8.4;
 contract QuizApp{
      uint public constant QUIZ_LENGTH=4;
      uint public constant QUIZ_REWARD_FACTOR= 1;
-    uint public constant REWARD_PER_SCORE= 0.1 ether; // should be more
+    uint public constant REWARD_PER_SCORE= 0.01 ether; // should be more
     uint public constant REWARD_PER_SCORE_QUIZ_END= 0.001 ether; 
 
 
      event QuizCreated(uint indexed quizId, address indexed createdBy, string indexed cid);
      event QuizUpdated(uint indexed quizId, address indexed createdBy, string indexed cid);
+     event QuizStarted(uint indexed quizId, address indexed createdBy, string indexed cid);
      event QuizEnded(uint indexed quizId, address indexed createdBy, string indexed cid);
      event QuizAnswerSubmitted(uint indexed quizId, address indexed submittedBy);
      event RewardRedemption(address indexed user, uint indexed quizId, uint indexed rewards);
@@ -99,7 +100,7 @@ contract QuizApp{
         quiz.endTime= _endTime;
         quiz.isActive=true;
 
-        emit QuizEnded(_quizId,msg.sender,quiz.cid);
+        emit QuizStarted(_quizId,msg.sender,quiz.cid);
     }
 
     // end quiz by publish results
@@ -112,6 +113,8 @@ contract QuizApp{
         // quiz.endTime= block.timestamp;
         quiz.answers=_answers;
         quiz.isEnded=true;
+        
+        emit QuizEnded(_quizId,msg.sender,quiz.cid);
     }
 
     // submit answers
@@ -306,6 +309,6 @@ contract QuizApp{
         return userAttemptedQuizIds[_user];
     }
     
-    function receive() external payable {}
+    receive() external payable {}
     
 }

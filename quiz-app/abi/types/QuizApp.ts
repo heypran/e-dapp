@@ -13,10 +13,10 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+} from 'ethers';
+import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import { Listener, Provider } from '@ethersproject/providers';
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export declare namespace QuizApp {
   export type QuizStruct = {
@@ -86,268 +86,267 @@ export declare namespace QuizApp {
 }
 
 export interface QuizAppInterface extends utils.Interface {
-  contractName: "QuizApp";
+  contractName: 'QuizApp';
   functions: {
-    "QUIZ_LENGTH()": FunctionFragment;
-    "QUIZ_REWARD_FACTOR()": FunctionFragment;
-    "REWARD_PER_SCORE()": FunctionFragment;
-    "REWARD_PER_SCORE_QUIZ_END()": FunctionFragment;
-    "calculateRewards(address,uint256)": FunctionFragment;
-    "calculateScore(address,uint256)": FunctionFragment;
-    "calculateTotalScore(address)": FunctionFragment;
-    "createQuiz(string,string)": FunctionFragment;
-    "endQuiz(uint256,uint8[4])": FunctionFragment;
-    "getAllQuizzes()": FunctionFragment;
-    "getQuizByUser(address)": FunctionFragment;
-    "getQuizDetails(uint256)": FunctionFragment;
-    "getSubmittedAnswer(address,uint256)": FunctionFragment;
-    "getSubmittedQuizAnswer(address,uint256)": FunctionFragment;
-    "getUserAttemptedQuizIds(address)": FunctionFragment;
-    "getUserQuizIds(address)": FunctionFragment;
-    "quizIdMapping(uint256)": FunctionFragment;
-    "quizSubmission(address,uint256,uint256)": FunctionFragment;
-    "receive()": FunctionFragment;
-    "redeemRewards(uint256)": FunctionFragment;
-    "startQuiz(uint256,uint256,uint256)": FunctionFragment;
-    "submitAnswers(uint256,uint8[4])": FunctionFragment;
-    "submitAnswersPostQuizEnd(uint256,uint8[4])": FunctionFragment;
-    "updateQuizDetails(uint256,string,string)": FunctionFragment;
-    "userAttemptedQuizIds(address,uint256)": FunctionFragment;
-    "userQuizIdMapping(address,uint256)": FunctionFragment;
-    "userQuizSubmissionMapping(address,uint256)": FunctionFragment;
-    "userRewards(address)": FunctionFragment;
+    'QUIZ_LENGTH()': FunctionFragment;
+    'QUIZ_REWARD_FACTOR()': FunctionFragment;
+    'REWARD_PER_SCORE()': FunctionFragment;
+    'REWARD_PER_SCORE_QUIZ_END()': FunctionFragment;
+    'calculateRewards(address,uint256)': FunctionFragment;
+    'calculateScore(address,uint256)': FunctionFragment;
+    'calculateTotalScore(address)': FunctionFragment;
+    'createQuiz(string,string)': FunctionFragment;
+    'endQuiz(uint256,uint8[4])': FunctionFragment;
+    'getAllQuizzes()': FunctionFragment;
+    'getQuizByUser(address)': FunctionFragment;
+    'getQuizDetails(uint256)': FunctionFragment;
+    'getSubmittedAnswer(address,uint256)': FunctionFragment;
+    'getSubmittedQuizAnswer(address,uint256)': FunctionFragment;
+    'getUserAttemptedQuizIds(address)': FunctionFragment;
+    'getUserQuizIds(address)': FunctionFragment;
+    'quizIdMapping(uint256)': FunctionFragment;
+    'quizSubmission(address,uint256,uint256)': FunctionFragment;
+    'redeemRewards(uint256)': FunctionFragment;
+    'startQuiz(uint256,uint256,uint256)': FunctionFragment;
+    'submitAnswers(uint256,uint8[4])': FunctionFragment;
+    'submitAnswersPostQuizEnd(uint256,uint8[4])': FunctionFragment;
+    'updateQuizDetails(uint256,string,string)': FunctionFragment;
+    'userAttemptedQuizIds(address,uint256)': FunctionFragment;
+    'userQuizIdMapping(address,uint256)': FunctionFragment;
+    'userQuizSubmissionMapping(address,uint256)': FunctionFragment;
+    'userRewards(address)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "QUIZ_LENGTH",
+    functionFragment: 'QUIZ_LENGTH',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "QUIZ_REWARD_FACTOR",
+    functionFragment: 'QUIZ_REWARD_FACTOR',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "REWARD_PER_SCORE",
+    functionFragment: 'REWARD_PER_SCORE',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "REWARD_PER_SCORE_QUIZ_END",
+    functionFragment: 'REWARD_PER_SCORE_QUIZ_END',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "calculateRewards",
+    functionFragment: 'calculateRewards',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "calculateScore",
+    functionFragment: 'calculateScore',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "calculateTotalScore",
+    functionFragment: 'calculateTotalScore',
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "createQuiz",
+    functionFragment: 'createQuiz',
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "endQuiz",
+    functionFragment: 'endQuiz',
     values: [
       BigNumberish,
       [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAllQuizzes",
+    functionFragment: 'getAllQuizzes',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getQuizByUser",
+    functionFragment: 'getQuizByUser',
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "getQuizDetails",
+    functionFragment: 'getQuizDetails',
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSubmittedAnswer",
+    functionFragment: 'getSubmittedAnswer',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSubmittedQuizAnswer",
+    functionFragment: 'getSubmittedQuizAnswer',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getUserAttemptedQuizIds",
+    functionFragment: 'getUserAttemptedQuizIds',
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "getUserQuizIds",
+    functionFragment: 'getUserQuizIds',
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "quizIdMapping",
+    functionFragment: 'quizIdMapping',
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "quizSubmission",
+    functionFragment: 'quizSubmission',
     values: [string, BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "receive", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "redeemRewards",
+    functionFragment: 'redeemRewards',
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "startQuiz",
+    functionFragment: 'startQuiz',
     values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "submitAnswers",
+    functionFragment: 'submitAnswers',
     values: [
       BigNumberish,
       [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "submitAnswersPostQuizEnd",
+    functionFragment: 'submitAnswersPostQuizEnd',
     values: [
       BigNumberish,
       [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateQuizDetails",
+    functionFragment: 'updateQuizDetails',
     values: [BigNumberish, string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "userAttemptedQuizIds",
+    functionFragment: 'userAttemptedQuizIds',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "userQuizIdMapping",
+    functionFragment: 'userQuizIdMapping',
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "userQuizSubmissionMapping",
+    functionFragment: 'userQuizSubmissionMapping',
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "userRewards", values: [string]): string;
+  encodeFunctionData(functionFragment: 'userRewards', values: [string]): string;
 
   decodeFunctionResult(
-    functionFragment: "QUIZ_LENGTH",
+    functionFragment: 'QUIZ_LENGTH',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "QUIZ_REWARD_FACTOR",
+    functionFragment: 'QUIZ_REWARD_FACTOR',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "REWARD_PER_SCORE",
+    functionFragment: 'REWARD_PER_SCORE',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "REWARD_PER_SCORE_QUIZ_END",
+    functionFragment: 'REWARD_PER_SCORE_QUIZ_END',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "calculateRewards",
+    functionFragment: 'calculateRewards',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "calculateScore",
+    functionFragment: 'calculateScore',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "calculateTotalScore",
+    functionFragment: 'calculateTotalScore',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "createQuiz", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "endQuiz", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createQuiz', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'endQuiz', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getAllQuizzes",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getQuizByUser",
+    functionFragment: 'getAllQuizzes',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getQuizDetails",
+    functionFragment: 'getQuizByUser',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSubmittedAnswer",
+    functionFragment: 'getQuizDetails',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSubmittedQuizAnswer",
+    functionFragment: 'getSubmittedAnswer',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getUserAttemptedQuizIds",
+    functionFragment: 'getSubmittedQuizAnswer',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getUserQuizIds",
+    functionFragment: 'getUserAttemptedQuizIds',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "quizIdMapping",
+    functionFragment: 'getUserQuizIds',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "quizSubmission",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "receive", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "redeemRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "startQuiz", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "submitAnswers",
+    functionFragment: 'quizIdMapping',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "submitAnswersPostQuizEnd",
+    functionFragment: 'quizSubmission',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateQuizDetails",
+    functionFragment: 'redeemRewards',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'startQuiz', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'submitAnswers',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "userAttemptedQuizIds",
+    functionFragment: 'submitAnswersPostQuizEnd',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "userQuizIdMapping",
+    functionFragment: 'updateQuizDetails',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "userQuizSubmissionMapping",
+    functionFragment: 'userAttemptedQuizIds',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "userRewards",
+    functionFragment: 'userQuizIdMapping',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'userQuizSubmissionMapping',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'userRewards',
     data: BytesLike
   ): Result;
 
   events: {
-    "QuizAnswerSubmitted(uint256,address)": EventFragment;
-    "QuizCreated(uint256,address,string)": EventFragment;
-    "QuizEnded(uint256,address,string)": EventFragment;
-    "QuizUpdated(uint256,address,string)": EventFragment;
-    "RewardRedemption(address,uint256,uint256)": EventFragment;
+    'QuizAnswerSubmitted(uint256,address)': EventFragment;
+    'QuizCreated(uint256,address,string)': EventFragment;
+    'QuizEnded(uint256,address,string)': EventFragment;
+    'QuizStarted(uint256,address,string)': EventFragment;
+    'QuizUpdated(uint256,address,string)': EventFragment;
+    'RewardRedemption(address,uint256,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "QuizAnswerSubmitted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "QuizCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "QuizEnded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "QuizUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardRedemption"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'QuizAnswerSubmitted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'QuizCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'QuizEnded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'QuizStarted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'QuizUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardRedemption'): EventFragment;
 }
 
 export type QuizAnswerSubmittedEvent = TypedEvent<
@@ -372,6 +371,13 @@ export type QuizEndedEvent = TypedEvent<
 
 export type QuizEndedEventFilter = TypedEventFilter<QuizEndedEvent>;
 
+export type QuizStartedEvent = TypedEvent<
+  [BigNumber, string, string],
+  { quizId: BigNumber; createdBy: string; cid: string }
+>;
+
+export type QuizStartedEventFilter = TypedEventFilter<QuizStartedEvent>;
+
 export type QuizUpdatedEvent = TypedEvent<
   [BigNumber, string, string],
   { quizId: BigNumber; createdBy: string; cid: string }
@@ -388,7 +394,7 @@ export type RewardRedemptionEventFilter =
   TypedEventFilter<RewardRedemptionEvent>;
 
 export interface QuizApp extends BaseContract {
-  contractName: "QuizApp";
+  contractName: 'QuizApp';
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -525,10 +531,6 @@ export interface QuizApp extends BaseContract {
       arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[number]>;
-
-    receive(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     redeemRewards(
       _quizId: BigNumberish,
@@ -697,10 +699,6 @@ export interface QuizApp extends BaseContract {
     arg2: BigNumberish,
     overrides?: CallOverrides
   ): Promise<number>;
-
-  receive(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   redeemRewards(
     _quizId: BigNumberish,
@@ -872,8 +870,6 @@ export interface QuizApp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>;
 
-    receive(overrides?: CallOverrides): Promise<void>;
-
     redeemRewards(
       _quizId: BigNumberish,
       overrides?: CallOverrides
@@ -934,7 +930,7 @@ export interface QuizApp extends BaseContract {
   };
 
   filters: {
-    "QuizAnswerSubmitted(uint256,address)"(
+    'QuizAnswerSubmitted(uint256,address)'(
       quizId?: BigNumberish | null,
       submittedBy?: string | null
     ): QuizAnswerSubmittedEventFilter;
@@ -943,7 +939,7 @@ export interface QuizApp extends BaseContract {
       submittedBy?: string | null
     ): QuizAnswerSubmittedEventFilter;
 
-    "QuizCreated(uint256,address,string)"(
+    'QuizCreated(uint256,address,string)'(
       quizId?: BigNumberish | null,
       createdBy?: string | null,
       cid?: string | null
@@ -954,7 +950,7 @@ export interface QuizApp extends BaseContract {
       cid?: string | null
     ): QuizCreatedEventFilter;
 
-    "QuizEnded(uint256,address,string)"(
+    'QuizEnded(uint256,address,string)'(
       quizId?: BigNumberish | null,
       createdBy?: string | null,
       cid?: string | null
@@ -965,7 +961,18 @@ export interface QuizApp extends BaseContract {
       cid?: string | null
     ): QuizEndedEventFilter;
 
-    "QuizUpdated(uint256,address,string)"(
+    'QuizStarted(uint256,address,string)'(
+      quizId?: BigNumberish | null,
+      createdBy?: string | null,
+      cid?: string | null
+    ): QuizStartedEventFilter;
+    QuizStarted(
+      quizId?: BigNumberish | null,
+      createdBy?: string | null,
+      cid?: string | null
+    ): QuizStartedEventFilter;
+
+    'QuizUpdated(uint256,address,string)'(
       quizId?: BigNumberish | null,
       createdBy?: string | null,
       cid?: string | null
@@ -976,7 +983,7 @@ export interface QuizApp extends BaseContract {
       cid?: string | null
     ): QuizUpdatedEventFilter;
 
-    "RewardRedemption(address,uint256,uint256)"(
+    'RewardRedemption(address,uint256,uint256)'(
       user?: string | null,
       quizId?: BigNumberish | null,
       rewards?: BigNumberish | null
@@ -1067,10 +1074,6 @@ export interface QuizApp extends BaseContract {
       arg1: BigNumberish,
       arg2: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    receive(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     redeemRewards(
@@ -1211,10 +1214,6 @@ export interface QuizApp extends BaseContract {
       arg1: BigNumberish,
       arg2: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    receive(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemRewards(
