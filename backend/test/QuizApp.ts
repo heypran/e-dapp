@@ -13,7 +13,6 @@ describe("QuizApp", () => {
 
     const quizApp = await ethers.getContractFactory("QuizApp")
     quizAppContract = await quizApp.deploy()
-    console.log("quizAppContract", quizAppContract.address)
   })
 
   // it("", async () => {
