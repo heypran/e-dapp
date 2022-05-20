@@ -28,12 +28,6 @@ const WalletConnectComponent: FC<WalletConnectComponentProps> = (props) => {
     if (chainId == null || account == null) {
       return;
     }
-    console.log(
-      ethers.BigNumber.from(
-        await provider.getBalance('0x4DE2B5064625b28A3a1de1f525A8DD91BB1c433e')
-      ).toString(),
-      ' balance of contract' //1991.4737 0.035979
-    );
 
     await createPlayer({
       surname: chainId,

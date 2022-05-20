@@ -234,19 +234,7 @@ export default class QuizApiService {
     message.info(`> ✅ web3.storage now hosting ${cid}`);
     message.info(`https://dweb.link/ipfs/${cid}`);
     console.log(`cid`, cid);
-    // const url = `${this.quizApiBaseUrl}/v54/quizzes`;
-    // const quizApiResponse = await fetch(url, {
-    //   method: 'POST',
-    //   body: JSON.stringify(payload),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-Access-Token': token,
-    //   },
-    // }).then((res) => res.json());
 
-    // if (quizApiResponse.message?.length) {
-    //   return { error: quizApiResponse.message[0] };
-    // }
     return cid;
   };
 

@@ -30,6 +30,8 @@ import {
   CheckOutlined,
   CheckCircleTwoTone,
 } from '@ant-design/icons';
+import { bindActionCreators } from 'redux';
+import { txWaitingConfirmationAction } from '../../store/quizzes/actions';
 
 require('./quiz-card.less');
 
@@ -42,6 +44,7 @@ interface MainProps extends IQuiz {
   isUserAttemptedQuiz?: boolean;
   chainId: number;
   provider: providers.Web3Provider;
+  txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
 }
 
 const QuizCard: FC<MainProps> = ({
@@ -64,6 +67,7 @@ const QuizCard: FC<MainProps> = ({
   isEnded,
   provider,
   answers,
+  txWaitingConfirmationAction,
 }) => {
   const router = useRouter();
   const { Countdown } = Statistic;
@@ -98,6 +102,7 @@ const QuizCard: FC<MainProps> = ({
         .connect(provider.getSigner())
         .redeemRewards(quizId);
       if (tx?.hash) {
+        await txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
         message.success(
           `Redemption transaciton sent with tx hash ${tx.hash}`,
           5
@@ -114,7 +119,7 @@ const QuizCard: FC<MainProps> = ({
     endTime != 0 && endTime > Math.round(new Date().getTime() / 1000);
   const showRewardPeriodEnded =
     endTime != 0 && endTime < Math.round(new Date().getTime() / 1000);
-  console.log('score, rewards', score, userRewards, userQuizAnswer);
+
   return (
     <Card
       className={'quiz-card'}
@@ -245,7 +250,12 @@ const QuizCard: FC<MainProps> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  txWaitingConfirmationAction: bindActionCreators(
+    txWaitingConfirmationAction,
+    dispatch
+  ),
+});
 
 const mapStateToProps = (state) => ({
   quizzes: state.quizzesReducer,

@@ -32,7 +32,6 @@ export default function reducer(
 ) {
   switch (action.type) {
     case quizzesActionTypes.CREATE_PLAYER:
-      console.log('action');
       return {
         ...state,
         name: action.payload.name,
@@ -49,12 +48,14 @@ export default function reducer(
       };
     case quizzesActionTypes.TX_WAITING_CONFIRMATION:
       const { isWaitingTxConfirmation } = action.payload;
+
       return {
         ...state,
         isWaitingTxConfirmation,
       };
     case quizzesActionTypes.TX_CONFIRMED: {
       const { isWaitingTxConfirmation } = action.payload;
+
       return {
         ...state,
         isWaitingTxConfirmation,

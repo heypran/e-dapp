@@ -36,7 +36,6 @@ export interface ITxWaitingConfirmationActionPayload {
 
 export const txWaitingConfirmationAction =
   (response: ITxWaitingConfirmationActionPayload) => async (dispatch) => {
-    console.log('response', response);
     return dispatch({
       type: quizzesActionTypes.TX_WAITING_CONFIRMATION,
       payload: response,

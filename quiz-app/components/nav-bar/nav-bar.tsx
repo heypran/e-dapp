@@ -45,12 +45,11 @@ const NavBar: FC<MainProps> = ({
     if (contract == null) {
       return;
     }
+    contract.removeAllListeners();
     contract.on('QuizCreated', (quizId, createdBy, cid) => {
-      console.log('quiz created');
       if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz created, Transaction Confirmed!', 10);
         txConfirmedAction({ isWaitingTxConfirmation: false });
-        router.push('/my-quizzes');
       }
     });
     contract.on('QuizUpdated', (quizId, createdBy, cid) => {
@@ -63,29 +62,24 @@ const NavBar: FC<MainProps> = ({
       if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz Started, Transaction Confirmed!', 10);
         txConfirmedAction({ isWaitingTxConfirmation: false });
-        router.push('/my-quizzes');
       }
     });
     contract.on('QuizEnded', (quizId, createdBy, cid) => {
       if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz ended, Transaction Confirmed!', 10);
         txConfirmedAction({ isWaitingTxConfirmation: false });
-        router.push('/my-quizzes');
       }
     });
     contract.on('QuizAnswerSubmitted', (quizId, submittedBy) => {
-      console.log('QuizAnswerSubmitted', quizId, submittedBy);
       if (submittedBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz answers submitted, Transaction Confirmed!', 10);
         txConfirmedAction({ isWaitingTxConfirmation: false });
-        router.push('/quizzes');
       }
     });
     contract.on('RewardRedemption', (user, quizId, rewards) => {
       if (user === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Reward Redemption Transaction Confirmed!', 10);
         txConfirmedAction({ isWaitingTxConfirmation: false });
-        router.push('/quizzes');
       }
     });
     return () => {

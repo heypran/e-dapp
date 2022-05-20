@@ -6,7 +6,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { QuizzesState } from '../store/quizzes/reducer';
-import { nextServerAPI } from '../config/constants';
 import Head from 'next/head';
 import NavBar from '../components/nav-bar/nav-bar';
 import { getQuizAppContract } from '../hooks/contractHelpers';
@@ -102,7 +101,7 @@ const QuizAttempt: FC<MainProps> = ({
     );
   }
 
-  const submitAnswers = () => {
+  const submitAnswers = async () => {
     if (quizzes?.surname == null || quizDetails == null) {
       message.error('Please connect the wallet first!', 3);
       router.push('/quizzes');
@@ -113,12 +112,12 @@ const QuizAttempt: FC<MainProps> = ({
     const contract = getQuizAppContract(chainId);
 
     try {
-      const tx = contract
+      const tx = await contract
         .connect(provider.getSigner())
         .submitAnswers(quizDetails.quizId, [...userAnswers]);
       if (tx?.hash) {
+        await txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
         message.success(`Transaction submitted with tx hash ${tx?.hash}`, 5);
-        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       console.log('Error: ', e);

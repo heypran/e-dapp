@@ -28,6 +28,7 @@ function WalletContextProvider(props: WalletContextProviderPropsType) {
   const wallet = useWalletConnect();
 
   return (
+    // @ts-ignore
     <WalletContext.Provider value={{ ...wallet }}>
       {props.children}
     </WalletContext.Provider>

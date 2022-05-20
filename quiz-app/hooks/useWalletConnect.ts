@@ -67,11 +67,11 @@ export const useWalletConnect = () => {
   }, [web3Modal]);
 
   const switchNetwork = async (network?: number) => {
+    if (network == null || provider == null || provider?.provider == null) {
+      return;
+    }
     try {
-      if (network == null || provider == null || provider.provider == null) {
-        return;
-      }
-
+      // @ts-ignore
       await provider?.provider?.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: toHex(network) }],
@@ -80,6 +80,7 @@ export const useWalletConnect = () => {
     } catch (switchError) {
       if ((switchError as any).code === 4902) {
         try {
+          // @ts-ignore
           await provider?.provider?.request({
             method: 'wallet_addEthereumChain',
             params: [getNetworkForMetamask(networkConfig[toHex(network)])],
