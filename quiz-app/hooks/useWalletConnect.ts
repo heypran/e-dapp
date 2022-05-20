@@ -84,8 +84,10 @@ export const useWalletConnect = () => {
             method: 'wallet_addEthereumChain',
             params: [getNetworkForMetamask(networkConfig[toHex(network)])],
           });
+          // connectWallet();
         } catch (error) {
           setError('Error switching wallet.');
+          console.log('error: ', error);
         }
       }
     }
@@ -142,14 +144,16 @@ export const useWalletConnect = () => {
   }, [web3Modal, connectWallet]);
 
   useEffect(() => {
-    if (provider == null) {
+    if (provider == null || chainId == null) {
       return;
     }
+
     if (chainId === CHAIN_ID) {
       return;
     }
+
     switchNetwork(CHAIN_ID);
-  }, [provider]);
+  }, [provider, chainId]);
 
   return {
     provider,

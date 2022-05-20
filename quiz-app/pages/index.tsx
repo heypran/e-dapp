@@ -22,17 +22,21 @@ const Home: NextPage = () => {
         <Row gutter={[8, 8]}>
           <Col xs={24} lg={8}>
             <HomeActionCard
-              name={'My Quizzes 🚀'}
+              name={'Manage My Quizzes 📝 ⚙️'}
               number={''}
               path={'/my-quizzes'}
             />
           </Col>
           <Col xs={24} lg={8}>
-            <HomeActionCard name={'Learn & 👀'} number={''} path={'/quizzes'} />
+            <HomeActionCard
+              name={'Learn to Earn 💰'}
+              number={''}
+              path={'/quizzes'}
+            />
           </Col>
           <Col xs={24} lg={8}>
             <HomeActionCard
-              name={'Create new quiz 👽'}
+              name={'Create new quiz 🖊️'}
               number={''}
               path={'/create-quiz'}
               requireUser={true}

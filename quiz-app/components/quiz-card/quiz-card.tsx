@@ -114,8 +114,7 @@ const QuizCard: FC<MainProps> = ({
     endTime != 0 && endTime > Math.round(new Date().getTime() / 1000);
   const showRewardPeriodEnded =
     endTime != 0 && endTime < Math.round(new Date().getTime() / 1000);
-  console.log('userQuizAnswer....', userQuizAnswer);
-
+  console.log('score, rewards', score, userRewards, userQuizAnswer);
   return (
     <Card
       className={'quiz-card'}
@@ -125,14 +124,17 @@ const QuizCard: FC<MainProps> = ({
       bordered={false}
     >
       <Col>
-        <Typography.Title level={4}>
+        <Typography.Title level={5}>
           Participants: {attemptedCount}
         </Typography.Title>
-        <Typography.Title level={4}>
+        <Typography.Title level={5}>
           Status: {isActive ? 'Active' : 'InActive'}
         </Typography.Title>
-        <Typography.Title level={4} style={{ textAlign: 'left' }}>
-          Reward 🎉 : {rewards} {getDappCurrencySymbol()}
+        <Typography.Title level={5} style={{ textAlign: 'left' }}>
+          Rewards 🎉 : {rewards}
+          <Typography.Text style={{ fontSize: '10px' }}>
+            {` ${getDappCurrencySymbol()}`}
+          </Typography.Text>
         </Typography.Title>
         {showCountDownTimer && (
           <Countdown
@@ -176,9 +178,9 @@ const QuizCard: FC<MainProps> = ({
 
             {rewards != null ? (
               <Typography.Title level={5} style={{ textAlign: 'left' }}>
-                Your Rewards: {userQuizAnswer?.redeemedRewards ?? userRewards}
+                Your Rewards: {userRewards}
                 <Typography.Text style={{ fontSize: '10px' }}>
-                  {getDappCurrencySymbol()}
+                  {` ${getDappCurrencySymbol()}`}
                 </Typography.Text>
               </Typography.Title>
             ) : (
@@ -233,7 +235,7 @@ const QuizCard: FC<MainProps> = ({
                 disabled={userQuizAnswer && userQuizAnswer.redeemedRewards > 0}
                 loading={loading}
               >
-                Redeem {userQuizAnswer?.redeemedRewards}
+                Redeem
               </Button>
             </Col>
           )}

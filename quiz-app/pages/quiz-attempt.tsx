@@ -11,12 +11,18 @@ import Head from 'next/head';
 import NavBar from '../components/nav-bar/nav-bar';
 import { getQuizAppContract } from '../hooks/contractHelpers';
 import { useWalletContext } from '../components/WalletContext';
+import { txWaitingConfirmationAction } from '../store/quizzes/actions';
+import { bindActionCreators } from 'redux';
 
 interface MainProps {
   quizzes: QuizzesState;
+  txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
 }
 
-const Quiz: FC<MainProps> = ({ quizzes }) => {
+const QuizAttempt: FC<MainProps> = ({
+  quizzes,
+  txWaitingConfirmationAction,
+}) => {
   const router = useRouter();
   const { quizCidContractId } = router.query;
   const [quizId, quizContractId] =
@@ -112,6 +118,7 @@ const Quiz: FC<MainProps> = ({ quizzes }) => {
         .submitAnswers(quizDetails.quizId, [...userAnswers]);
       if (tx?.hash) {
         message.success(`Transaction submitted with tx hash ${tx?.hash}`, 5);
+        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       console.log('Error: ', e);
@@ -212,10 +219,15 @@ const Quiz: FC<MainProps> = ({ quizzes }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  txWaitingConfirmationAction: bindActionCreators(
+    txWaitingConfirmationAction,
+    dispatch
+  ),
+});
 
 const mapStateToProps = (state) => ({
   quizzes: state.quizzesReducer,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
+export default connect(mapStateToProps, mapDispatchToProps)(QuizAttempt);

@@ -26,7 +26,7 @@ export const useGetUserQuizAnswers = (
             user,
             quizContractId
           );
-        console.log('userQuizAnswer.......', userQuizAnswer);
+        console.log(`userQUiz Answer`, userQuizAnswer);
         setUserQuizAnswer(userQuizAnswer);
       } catch (e) {
         console.log('error', e);

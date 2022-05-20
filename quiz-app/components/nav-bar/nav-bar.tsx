@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import QuizCard from '../../components/quiz-card/quiz-card';
-import { Button, Col, message, Row, Tooltip, Typography } from 'antd';
+import { Button, Col, message, Row, Spin, Tooltip, Typography } from 'antd';
 import QuizApiService from '../../services/quizApi';
 import { IQuiz } from '../../types';
 import Head from 'next/head';
@@ -16,12 +16,21 @@ import { useRouter } from 'next/router';
 import HomeWalletConnect from '../home-wallet-connect/home-wallet-connect';
 import { useWalletContext } from '../WalletContext';
 import { getQuizAppContract } from '../../hooks/contractHelpers';
+import { connect } from 'react-redux';
+import { QuizzesState } from '../../store/quizzes/reducer';
+import { txConfirmedAction } from '../../store/quizzes/actions';
+import { bindActionCreators } from 'redux';
 
 interface MainProps {
-  quizzes: IQuiz[];
+  quizzesState: QuizzesState;
+
+  txConfirmedAction(args: { isWaitingTxConfirmation: boolean }): void;
 }
 
-const NavBar: FC = () => {
+const NavBar: FC<MainProps> = ({
+  quizzesState,
+  txConfirmedAction,
+}: MainProps) => {
   const router = useRouter();
 
   const handleReloadQuizzes = () => router.reload();
@@ -37,29 +46,46 @@ const NavBar: FC = () => {
       return;
     }
     contract.on('QuizCreated', (quizId, createdBy, cid) => {
-      if (createdBy === account) {
+      console.log('quiz created');
+      if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz created, Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+        router.push('/my-quizzes');
       }
     });
     contract.on('QuizUpdated', (quizId, createdBy, cid) => {
-      if (createdBy === account) {
+      if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz updated, Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+      }
+    });
+    contract.on('QuizStarted', (quizId, createdBy, cid) => {
+      if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
+        message.success('Quiz Started, Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+        router.push('/my-quizzes');
       }
     });
     contract.on('QuizEnded', (quizId, createdBy, cid) => {
-      if (createdBy === account) {
+      if (createdBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz ended, Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+        router.push('/my-quizzes');
       }
     });
     contract.on('QuizAnswerSubmitted', (quizId, submittedBy) => {
       console.log('QuizAnswerSubmitted', quizId, submittedBy);
-      if (submittedBy === account) {
+      if (submittedBy === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Quiz answers submitted, Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+        router.push('/quizzes');
       }
     });
     contract.on('RewardRedemption', (user, quizId, rewards) => {
-      if (user === account) {
+      if (user === account && quizzesState.isWaitingTxConfirmation) {
         message.success('Reward Redemption Transaction Confirmed!', 10);
+        txConfirmedAction({ isWaitingTxConfirmation: false });
+        router.push('/quizzes');
       }
     });
     return () => {
@@ -122,7 +148,15 @@ const NavBar: FC = () => {
       </Col>
 
       <Col>
-        <HomeWalletConnect />
+        <Row>
+          {quizzesState.isWaitingTxConfirmation && (
+            <Typography.Title level={5} style={{ marginRight: '16px' }}>
+              <Spin />
+              Confirming Tx...
+            </Typography.Title>
+          )}
+          <HomeWalletConnect />
+        </Row>
         {/* <Row>
           <Col>
             <Button
@@ -148,4 +182,14 @@ const NavBar: FC = () => {
   );
 };
 
-export default NavBar;
+const mapDispatchToProps = (dispatch) => ({
+  txConfirmedAction: bindActionCreators(txConfirmedAction, dispatch),
+});
+
+const mapStateToProps = (state) => ({
+  quizzesState: state.quizzesReducer,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+
+// export default NavBar;

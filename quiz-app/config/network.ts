@@ -307,6 +307,7 @@ export const getNetworkForMetamask = (
   delete network['infoURL'];
   delete network['networkId'];
   delete network['shortName'];
+  delete network['title'];
   delete network['blockExplorerUrls'];
   network['chainId'] = toHex(network['chainId']);
   return network;

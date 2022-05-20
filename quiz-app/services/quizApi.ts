@@ -166,18 +166,20 @@ export default class QuizApiService {
         quizId
       );
 
+      const rewards =
+        ethers.BigNumber.from(quizAnswer.redeemedRewards).toString() == '0'
+          ? 0
+          : Number(ethers.utils.formatEther(quizAnswer.redeemedRewards));
       return {
         quizId: ethers.BigNumber.from(quizAnswer.quizId).toNumber(),
         user: quizAnswer.user,
-        redeemedRewards: ethers.BigNumber.from(
-          quizAnswer.redeemedRewards
-        ).toNumber(),
-        submissionTime: ethers.BigNumber.from(
-          quizAnswer.submissionTime
-        ).toNumber(),
+        redeemedRewards: rewards,
+        submissionTime: quizAnswer.submissionTime,
         answers: quizAnswer.answers,
       };
-    } catch (e) {}
+    } catch (e) {
+      console.log('Error: ', e);
+    }
   };
 
   public getQuizByCid = async (

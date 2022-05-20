@@ -20,11 +20,7 @@ export const useGetUserScoreByQuizId = (
         const quizAppContract = getQuizAppContract(chainId);
         const rewards = await quizAppContract.calculateRewards(user, quizId);
         const score = await quizAppContract.calculateScore(user, quizId);
-        console.log(
-          `rewards quizId`,
-          ethers.utils.formatUnits(rewards),
-          quizId
-        );
+        console.log(`rewards quizId`, ethers.utils.formatUnits(rewards), score);
 
         setScore(ethers.BigNumber.from(score).toNumber());
         setRewards(ethers.utils.formatUnits(rewards));

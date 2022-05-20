@@ -15,6 +15,7 @@ export interface QuizzesState {
         [key: string]: IQuestionAnswer[];
       }
     | {};
+  isWaitingTxConfirmation: boolean;
 }
 
 const initialState: QuizzesState = {
@@ -22,6 +23,7 @@ const initialState: QuizzesState = {
   name: undefined,
   surname: undefined,
   answers: {},
+  isWaitingTxConfirmation: false,
 };
 
 export default function reducer(
@@ -45,6 +47,20 @@ export default function reducer(
         ...state,
         answers: { ...answers, [quizId]: [...previousQuizAnswers, answer] },
       };
+    case quizzesActionTypes.TX_WAITING_CONFIRMATION:
+      const { isWaitingTxConfirmation } = action.payload;
+      return {
+        ...state,
+        isWaitingTxConfirmation,
+      };
+    case quizzesActionTypes.TX_CONFIRMED: {
+      const { isWaitingTxConfirmation } = action.payload;
+      return {
+        ...state,
+        isWaitingTxConfirmation,
+      };
+    }
+
     default:
       return state;
   }

@@ -32,17 +32,22 @@ import { mapNumToOption, mapOptionToNum } from '../../utils';
 import moment from 'moment';
 import { getDappCurrencySymbol } from '../../config/dapp-config';
 import { ethers } from 'ethers';
+import { txWaitingConfirmationAction } from '../../store/quizzes/actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 interface QuizManagementProps {
   quizQuestions: IQuestionFrom[];
   quizDetails: IQuiz;
   quizContractId: string;
+  txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
 }
 
 const QuizManagement: FC<QuizManagementProps> = ({
   quizQuestions,
   quizDetails,
   quizContractId,
+  txWaitingConfirmationAction,
 }: QuizManagementProps) => {
   const [form] = Form.useForm();
   const [startQuizForm] = Form.useForm();
@@ -79,6 +84,7 @@ const QuizManagement: FC<QuizManagementProps> = ({
         );
       if (tx?.hash) {
         message.success(`Transaction subbmitted with hash ${tx.hash}`, 5);
+        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       console.log('Error: ', e);
@@ -121,6 +127,7 @@ const QuizManagement: FC<QuizManagementProps> = ({
         .endQuiz(quizDetails.quizId ?? Number(quizContractId), answers);
       if (tx?.hash) {
         message.success(`Transaction subbmitted with hash ${tx.hash}`, 5);
+        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       message.error('Error submitting transaction! Please try again!', 5);
@@ -261,4 +268,17 @@ const QuizManagement: FC<QuizManagementProps> = ({
   );
 };
 
-export default QuizManagement;
+const mapDispatchToProps = (dispatch) => ({
+  txWaitingConfirmationAction: bindActionCreators(
+    txWaitingConfirmationAction,
+    dispatch
+  ),
+});
+
+const mapStateToProps = (state) => ({
+  quizzes: state.quizzesReducer,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizManagement);
+
+// export default QuizManagement;

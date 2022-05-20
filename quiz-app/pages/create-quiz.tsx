@@ -29,12 +29,18 @@ import NavBar from '../components/nav-bar/nav-bar';
 import { networkConfig } from '../config/network';
 import { toHex } from '../utils/wallet';
 import { useGetBlockExplorer } from '../hooks/useGetBlockExplorer';
+import { txWaitingConfirmationAction } from '../store/quizzes/actions';
+import { bindActionCreators } from 'redux';
 
 interface MainProps {
   quizzes: QuizzesState;
+  txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
 }
 
-const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
+const CreateQuiz: FC<MainProps> = ({
+  quizzes,
+  txWaitingConfirmationAction,
+}) => {
   const [form] = Form.useForm();
   const [formCid] = Form.useForm();
   const router = useRouter();
@@ -161,10 +167,12 @@ const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
           `Transaction subbmitted with hash <a href=${explorer}>${tx.hash}</a>`,
           3
         );
+        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       // setLoading(false);
       message.error('Error submitting transaction!', 5);
+      console.log('Error: ', e);
     }
     // form.resetFields();
     // in case tx fails dont recreate cid
@@ -183,7 +191,7 @@ const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
       });
     }
   };
-  console.log('quizDetailsByUser', quizDetailsByUser);
+
   return (
     <>
       <Head>
@@ -191,33 +199,30 @@ const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
         <meta property='og:title' content='create a new quiz' key='title' />
       </Head>
 
-      <Row justify={'center'} style={{ height: '100%', paddingTop: '1rem' }}>
-        <Col>
-          <Col>
-            <Typography.Title
-              level={2}
-              style={{ textAlign: 'center' }}
-              className={'controls-text'}
-            >
-              <Typography.Text code={true}>
-                Create a quiz of {QUIZ_LENGTH}
-                {/* <Select
-                  placeholder={'no.'}
-                  value={questionsNo}
-                  status={'warning'}
-                  onChange={handleQuestionNoChange}
-                >
-                  <Select.Option value={2}>2</Select.Option>
-                  <Select.Option value={3}>3</Select.Option>
-                  <Select.Option value={4}>4</Select.Option>
-                  <Select.Option value={5}>5</Select.Option>
-                </Select> */}
-                &nbsp;questions 🤔
-              </Typography.Text>
-            </Typography.Title>
-            <NavBar />
-          </Col>
-          <Col>
+      <Row justify='center' align='top' style={{ paddingTop: '1rem' }}>
+        <Col span={24}>
+          <Typography.Title
+            level={2}
+            style={{ textAlign: 'center' }}
+            className={'controls-text'}
+          >
+            <Typography.Text code={true}>
+              <NavBar />
+            </Typography.Text>
+          </Typography.Title>
+        </Col>
+        <Col span={24}>
+          <Typography.Title
+            level={2}
+            style={{ textAlign: 'center' }}
+            className={'controls-text'}
+          >
+            <Typography.Text code={true}>
+              Create a quiz of {QUIZ_LENGTH}
+              &nbsp;questions 🤔
+            </Typography.Text>
+          </Typography.Title>
+          <Row justify='center'>
             <Card style={{ maxWidth: '650px' }}>
               <Form
                 form={formCid}
@@ -504,6 +509,7 @@ const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
                     <Button onClick={() => router.push('/quizzes')}>
                       See all quizzes
                     </Button>
+
                     <Space direction={'horizontal'}>
                       <Button
                         block={true}
@@ -526,14 +532,19 @@ const CreateQuiz: FC<MainProps> = ({ quizzes }) => {
                 </Form.Item>
               </Form>
             </Card>
-          </Col>
+          </Row>
         </Col>
       </Row>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  txWaitingConfirmationAction: bindActionCreators(
+    txWaitingConfirmationAction,
+    dispatch
+  ),
+});
 
 const mapStateToProps = (state) => ({
   quizzes: state.quizzesReducer,

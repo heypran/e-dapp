@@ -29,15 +29,18 @@ import { getQuizAppContract } from '../hooks/contractHelpers';
 import { ethers } from 'ethers';
 import { shuffleArray } from '../utils';
 import QuizManagement from '../components/my-quizzes/quiz-management';
+import { txWaitingConfirmationAction } from '../store/quizzes/actions';
+import { bindActionCreators } from 'redux';
 
 interface MainProps {
   quizzes: QuizzesState;
+  txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
   // quizId: string;
   //quiz: IQuiz;
   //quizContractId: string;
 }
 
-const EditQuiz: FC<MainProps> = ({ quizzes }) => {
+const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { quizCidContractId } = router.query;
@@ -159,6 +162,7 @@ const EditQuiz: FC<MainProps> = ({ quizzes }) => {
         .updateQuizDetails(quizContractId, responseCid, values.title);
       if (tx?.hash) {
         message.success(`Transaction subbmitted with hash ${tx.hash}`, 3);
+        txWaitingConfirmationAction({ isWaitingTxConfirmation: true });
       }
     } catch (e) {
       setLoading(false);
@@ -256,19 +260,20 @@ const EditQuiz: FC<MainProps> = ({ quizzes }) => {
             )}
           </Row>
         </Col>
-        <Col>
-          {quizDetailsByUser && (
-            <Card style={{ maxWidth: '650px' }}>
-              <Form
-                form={form}
-                onFinish={onSubmit}
-                labelAlign={'left'}
-                initialValues={{
-                  questions: quizDetailsByUser,
-                }}
-                colon={false}
-              >
-                {/* <Row gutter={[8, 8]}>
+        <Col span={22}>
+          <Row justify='center'>
+            {quizDetailsByUser && (
+              <Card style={{ maxWidth: '650px' }}>
+                <Form
+                  form={form}
+                  onFinish={onSubmit}
+                  labelAlign={'left'}
+                  initialValues={{
+                    questions: quizDetailsByUser,
+                  }}
+                  colon={false}
+                >
+                  {/* <Row gutter={[8, 8]}>
                   <Form.Item
                     label={'Load from CID'}
                     name={'quizCid'}
@@ -290,109 +295,109 @@ const EditQuiz: FC<MainProps> = ({ quizzes }) => {
                   />
                 </Row> */}
 
-                {quizDetails?.title && (
-                  <Form.Item
-                    label={'Title'}
-                    name={'title'}
-                    initialValue={quizDetails.title}
-                    rules={[{ required: true }]}
-                  >
-                    <Input
-                      placeholder={'e.g.: web3 quiz'}
-                      disabled={quizDetails?.isActive}
-                    />
-                  </Form.Item>
-                )}
-                <Alert
-                  message={
-                    <span
-                      style={{
-                        fontStyle: 'italic',
-                        fontWeight: 'bold',
-                        fontSize: 14,
-                      }}
+                  {quizDetails?.title && (
+                    <Form.Item
+                      label={'Title'}
+                      name={'title'}
+                      initialValue={quizDetails.title}
+                      rules={[{ required: true }]}
                     >
-                      Note!
-                    </span>
-                  }
-                  description={
-                    <div style={{ fontSize: 13 }}>
-                      <span>
-                        * Correct answer will be automatically added to question
-                        options
+                      <Input
+                        placeholder={'e.g.: web3 quiz'}
+                        disabled={quizDetails?.isActive}
+                      />
+                    </Form.Item>
+                  )}
+                  <Alert
+                    message={
+                      <span
+                        style={{
+                          fontStyle: 'italic',
+                          fontWeight: 'bold',
+                          fontSize: 14,
+                        }}
+                      >
+                        Note!
                       </span>
-                      <br />
-                      <span>
-                        * Two additional question answers are required (a, b -
-                        required and c,d - optional)
-                      </span>
-                      <br />
-                      <span>
-                        * Changing the question no from a greater to a smaller
-                        value will delete last questions
-                      </span>
-                      <br />
-                      <span>
-                        * The new quiz will appear in the quizzes list in a few
-                        seconds after creating it, just click on refresh quizzes
-                        button
-                      </span>
-                    </div>
-                  }
-                  type={'info'}
-                  showIcon={true}
-                />
-                <Form.List name='questions'>
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map(({ key, name, ...restField }) => (
-                        <Fragment key={key}>
-                          <Divider orientation={'left'} plain={true}>
-                            <span
-                              style={{
-                                fontSize: '14px',
-                                fontWeight: 'normal',
-                                fontStyle: 'italic',
-                                opacity: 0.7,
-                              }}
-                            >
-                              question {name + 1}
-                            </span>
-                          </Divider>
-                          <Row gutter={[8, 8]}>
-                            <Col span={22}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'question']}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: 'Missing question ',
-                                  },
-                                ]}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
+                    }
+                    description={
+                      <div style={{ fontSize: 13 }}>
+                        <span>
+                          * Correct answer will be automatically added to
+                          question options
+                        </span>
+                        <br />
+                        <span>
+                          * Two additional question answers are required (a, b -
+                          required and c,d - optional)
+                        </span>
+                        <br />
+                        <span>
+                          * Changing the question no from a greater to a smaller
+                          value will delete last questions
+                        </span>
+                        <br />
+                        <span>
+                          * The new quiz will appear in the quizzes list in a
+                          few seconds after creating it, just click on refresh
+                          quizzes button
+                        </span>
+                      </div>
+                    }
+                    type={'info'}
+                    showIcon={true}
+                  />
+                  <Form.List name='questions'>
+                    {(fields, { add, remove }) => (
+                      <>
+                        {fields.map(({ key, name, ...restField }) => (
+                          <Fragment key={key}>
+                            <Divider orientation={'left'} plain={true}>
+                              <span
+                                style={{
+                                  fontSize: '14px',
+                                  fontWeight: 'normal',
+                                  fontStyle: 'italic',
+                                  opacity: 0.7,
+                                }}
                               >
-                                <Input.TextArea
-                                  rows={1}
-                                  placeholder={'Question text'}
-                                  maxLength={300}
-                                  disabled={quizDetails?.isActive}
+                                question {name + 1}
+                              </span>
+                            </Divider>
+                            <Row gutter={[8, 8]}>
+                              <Col span={22}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'question']}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: 'Missing question ',
+                                    },
+                                  ]}
+                                  wrapperCol={{ span: 24 }}
+                                  style={{ marginBottom: 0 }}
+                                >
+                                  <Input.TextArea
+                                    rows={1}
+                                    placeholder={'Question text'}
+                                    maxLength={300}
+                                    disabled={quizDetails?.isActive}
+                                  />
+                                </Form.Item>
+                              </Col>
+                              <Col span={2}>
+                                <Button
+                                  block={true}
+                                  icon={<DeleteOutlined />}
+                                  onClick={() => remove(name)}
+                                  danger={true}
+                                  disabled={
+                                    fields.length === 1 || quizDetails?.isActive
+                                  }
                                 />
-                              </Form.Item>
-                            </Col>
-                            <Col span={2}>
-                              <Button
-                                block={true}
-                                icon={<DeleteOutlined />}
-                                onClick={() => remove(name)}
-                                danger={true}
-                                disabled={
-                                  fields.length === 1 || quizDetails?.isActive
-                                }
-                              />
-                            </Col>
-                            {/* <Col span={24}>
+                              </Col>
+                              {/* <Col span={24}>
                               <Form.Item
                                 {...restField}
                                 name={[name, 'correct_answer']}
@@ -408,124 +413,124 @@ const EditQuiz: FC<MainProps> = ({ quizzes }) => {
                                 <Input placeholder={'Correct answer'} />
                               </Form.Item>
                             </Col> */}
-                            <Col lg={12} xs={24}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'answer1']}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: 'Missing option ( a )',
-                                  },
-                                ]}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
-                              >
-                                <Input
-                                  placeholder={'Option ( a )'}
-                                  disabled={quizDetails?.isActive}
-                                />
-                              </Form.Item>
-                            </Col>
-                            <Col lg={12} xs={24}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'answer2']}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: 'Missing option ( b )',
-                                  },
-                                ]}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
-                              >
-                                <Input
-                                  placeholder={'Option ( b )'}
-                                  disabled={quizDetails?.isActive}
-                                />
-                              </Form.Item>
-                            </Col>
-                            <Col lg={12} xs={24}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'answer3']}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
-                              >
-                                <Input
-                                  placeholder={'Option ( c )'}
-                                  disabled={quizDetails?.isActive}
-                                />
-                              </Form.Item>
-                            </Col>
-                            <Col lg={12} xs={24}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'answer4']}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
-                              >
-                                <Input
-                                  placeholder={'Option ( d )'}
-                                  disabled={quizDetails?.isActive}
-                                />
-                              </Form.Item>
-                            </Col>
-                          </Row>
-                        </Fragment>
-                      ))}
-                      {quizDetailsByUser &&
-                        quizDetailsByUser.length > fields.length && (
-                          <Form.Item
-                            wrapperCol={{ span: 24 }}
-                            style={{ marginTop: 24 }}
-                          >
-                            <Button
-                              type='dashed'
-                              onClick={() => add()}
-                              block={true}
-                              disabled={quizDetails?.isActive}
+                              <Col lg={12} xs={24}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'answer1']}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: 'Missing option ( a )',
+                                    },
+                                  ]}
+                                  wrapperCol={{ span: 24 }}
+                                  style={{ marginBottom: 0 }}
+                                >
+                                  <Input
+                                    placeholder={'Option ( a )'}
+                                    disabled={quizDetails?.isActive}
+                                  />
+                                </Form.Item>
+                              </Col>
+                              <Col lg={12} xs={24}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'answer2']}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: 'Missing option ( b )',
+                                    },
+                                  ]}
+                                  wrapperCol={{ span: 24 }}
+                                  style={{ marginBottom: 0 }}
+                                >
+                                  <Input
+                                    placeholder={'Option ( b )'}
+                                    disabled={quizDetails?.isActive}
+                                  />
+                                </Form.Item>
+                              </Col>
+                              <Col lg={12} xs={24}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'answer3']}
+                                  wrapperCol={{ span: 24 }}
+                                  style={{ marginBottom: 0 }}
+                                >
+                                  <Input
+                                    placeholder={'Option ( c )'}
+                                    disabled={quizDetails?.isActive}
+                                  />
+                                </Form.Item>
+                              </Col>
+                              <Col lg={12} xs={24}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'answer4']}
+                                  wrapperCol={{ span: 24 }}
+                                  style={{ marginBottom: 0 }}
+                                >
+                                  <Input
+                                    placeholder={'Option ( d )'}
+                                    disabled={quizDetails?.isActive}
+                                  />
+                                </Form.Item>
+                              </Col>
+                            </Row>
+                          </Fragment>
+                        ))}
+                        {quizDetailsByUser &&
+                          quizDetailsByUser.length > fields.length && (
+                            <Form.Item
+                              wrapperCol={{ span: 24 }}
+                              style={{ marginTop: 24 }}
                             >
-                              Add question
-                            </Button>
-                          </Form.Item>
+                              <Button
+                                type='dashed'
+                                onClick={() => add()}
+                                block={true}
+                                disabled={quizDetails?.isActive}
+                              >
+                                Add question
+                              </Button>
+                            </Form.Item>
+                          )}
+
+                        {quizDetailsByUser.length === fields.length && (
+                          <Alert
+                            style={{ margin: '24px 0' }}
+                            message={
+                              <span
+                                style={{
+                                  fontStyle: 'italic',
+                                  fontWeight: 'bold',
+                                  fontSize: 14,
+                                }}
+                              >
+                                Reached questions limit!
+                              </span>
+                            }
+                            type={'warning'}
+                            description={
+                              <div style={{ fontSize: 13 }}>
+                                <span>{`You've defined the maximum number of questions as ${questionsNo}`}</span>
+                              </div>
+                            }
+                            showIcon={true}
+                          />
                         )}
+                      </>
+                    )}
+                  </Form.List>
 
-                      {quizDetailsByUser.length === fields.length && (
-                        <Alert
-                          style={{ margin: '24px 0' }}
-                          message={
-                            <span
-                              style={{
-                                fontStyle: 'italic',
-                                fontWeight: 'bold',
-                                fontSize: 14,
-                              }}
-                            >
-                              Reached questions limit!
-                            </span>
-                          }
-                          type={'warning'}
-                          description={
-                            <div style={{ fontSize: 13 }}>
-                              <span>{`You've defined the maximum number of questions as ${questionsNo}`}</span>
-                            </div>
-                          }
-                          showIcon={true}
-                        />
-                      )}
-                    </>
-                  )}
-                </Form.List>
-
-                <Form.Item>
-                  <Row gutter={8} justify={'space-between'}>
-                    <Button onClick={() => router.push('/my-quizzes')}>
-                      See all of your quizzes
-                    </Button>
-                    <Space direction={'horizontal'}>
-                      {/* <Button
+                  <Form.Item>
+                    <Row gutter={8} justify={'space-between'}>
+                      <Button onClick={() => router.push('/my-quizzes')}>
+                        See all of your quizzes
+                      </Button>
+                      <Space direction={'horizontal'}>
+                        {/* <Button
                         block={true}
                         type={'primary'}
                         danger={true}
@@ -534,28 +539,34 @@ const EditQuiz: FC<MainProps> = ({ quizzes }) => {
                       >
                         Discard
                       </Button> */}
-                      <Button
-                        block={true}
-                        type={'primary'}
-                        htmlType={'submit'}
-                        loading={loading}
-                        disabled={quizDetails?.isActive}
-                      >
-                        Submit Changes
-                      </Button>
-                    </Space>
-                  </Row>
-                </Form.Item>
-              </Form>
-            </Card>
-          )}
+                        <Button
+                          block={true}
+                          type={'primary'}
+                          htmlType={'submit'}
+                          loading={loading}
+                          disabled={quizDetails?.isActive}
+                        >
+                          Submit Changes
+                        </Button>
+                      </Space>
+                    </Row>
+                  </Form.Item>
+                </Form>
+              </Card>
+            )}
+          </Row>
         </Col>
       </Row>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  txWaitingConfirmationAction: bindActionCreators(
+    txWaitingConfirmationAction,
+    dispatch
+  ),
+});
 
 const mapStateToProps = (state) => ({
   quizzes: state.quizzesReducer,

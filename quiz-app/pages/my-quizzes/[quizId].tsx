@@ -71,7 +71,6 @@ const EditQuiz: FC<MainProps> = ({ quizId, quizzes, quizContractId }) => {
         quizId as string
       );
 
-      console.log('resosne', response);
       if (response == null) {
         message.error('Error getting quiz details for current user: ');
       } else {
