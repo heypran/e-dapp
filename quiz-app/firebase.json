@@ -5,6 +5,12 @@
       "public": "out",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "cleanUrls": true
+    },
+    {
+      "site": "e-dapp",
+      "public": "out",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "cleanUrls": true
     }
   ]
 }

@@ -255,28 +255,6 @@ const EditQuiz: FC<MainProps> = ({ quizId, quizzes, quizContractId }) => {
                 }}
                 colon={false}
               >
-                {/* <Row gutter={[8, 8]}>
-                  <Form.Item
-                    label={'Load from CID'}
-                    name={'quizCid'}
-                    rules={[{ required: false }]}
-                    style={{ width: '80%' }}
-                  >
-                    <Input
-                      placeholder={
-                        'bafybeifx2nqcnwbuhpsbxx2kojbxtivriptxwerpq2m4lzyzjnxiic5myu'
-                      }
-                      value='bafybeifx2nqcnwbuhpsbxx2kojbxtivriptxwerpq2m4lzyzjnxiic5myu'
-                    />
-                  </Form.Item>
-                  <Button
-                    icon={<SendOutlined />}
-                    onClick={() => {
-                      // onCreateFromCid();
-                    }}
-                  />
-                </Row> */}
-
                 {quizDetails?.title && (
                   <Form.Item
                     label={'Title'}
@@ -526,28 +504,17 @@ const EditQuiz: FC<MainProps> = ({ quizId, quizzes, quizContractId }) => {
   );
 };
 
-/**
- * Generate on build time the pages for quizzes
- * */
 export const getStaticPaths = async () => {
-  //  const quizzes = await QuizApiService.getInstance().getAllQuizzesByCid();
-
   const paths = [].map((_) => ({
     params: {},
   }));
 
-  // const paths = quizzes.map((q) => ({
-  //   params: { quizId: `${q.quizCid}-${q.quizId}` },
-  // }));
   return {
     paths: paths,
     fallback: 'blocking',
   };
 };
 
-/**
- * On build get the props for each quiz
- */
 export const getStaticProps = async ({
   params,
 }: {

@@ -23,7 +23,6 @@ const CreatePlayer: FC<MainProps> = (props) => {
   const [form] = Form.useForm();
   const router = useRouter();
 
-  /** on-mount (notify user) */
   useEffect(() => {
     if (quizzes.userId) {
       message.info(

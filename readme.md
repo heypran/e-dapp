@@ -1,22 +1,31 @@
-### Learn To Earn Dapp
+### Learn To Earn Quiz Dapp
 
-Project Description: Learn to Earn Dapp.
+![](https://i.imgur.com/waxVImv.png)
 
+##### Project Description:
+
+Learn to Earn Dapp.
 User can create quiz, attempt quizzes and earn tokens for correct answers.
 
 Team:
-Github: @heypran
 
-Technologies Used:
+- Github: @heypran
 
-Uses IPFS to store quiz details ( web3 storage), such as questions, options, titles etc. Later option to save notes and discussion threads will be added.
-Refer files `quiz-app/services/quizApi` and functions such as `createQuiz` , `getQuizByCid`.
+##### Technologies Used:
+
+Smart Contract deployed on blockchain.
+
+Uses IPFS to store quiz details ( web3 storage), such as questions, options, titles etc. Later option to save notes and discussion threads will be added. Refer files `quiz-app/services/quizApi` and functions such as `createQuiz` , `getQuizByCid`.
 
 Frontend built using Antd framework, NextJs, React and Typescript.
 
 [Full Demo](https://youtu.be/PRhfjA5xzLs)
 
-[Website Testnet](https://e-dapp.web.app/)
+[IPFS Usage Demo](https://youtu.be/nIAMJQLiEKQ)
+
+[Website](https://quiz-dapp.web.app)
+
+![](https://i.imgur.com/waxVImv.png)
 
 ### How to Run
 

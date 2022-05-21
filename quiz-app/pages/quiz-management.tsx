@@ -1,6 +1,6 @@
 import QuizApiService from '../services/quizApi';
-import { IQuestion, IQuestionFrom, IQuestionReq, IQuiz } from '../types';
-import QuestionCard from '../components/question-card/question-card';
+import { IQuestionFrom, IQuestionReq, IQuiz } from '../types';
+
 import {
   Alert,
   Button,
@@ -11,23 +11,19 @@ import {
   Input,
   message,
   Row,
-  Select,
   Space,
   Spin,
   Typography,
 } from 'antd';
-import { DeleteOutlined, SendOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import React, { FC, Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { QuizzesState } from '../store/quizzes/reducer';
-import { nextServerAPI } from '../config/constants';
 import Head from 'next/head';
 import NavBar from '../components/nav-bar/nav-bar';
 import { useWalletContext } from '../components/WalletContext';
 import { getQuizAppContract } from '../hooks/contractHelpers';
-import { ethers } from 'ethers';
-import { shuffleArray } from '../utils';
 import QuizManagement from '../components/my-quizzes/quiz-management';
 import { txWaitingConfirmationAction } from '../store/quizzes/actions';
 import { bindActionCreators } from 'redux';
@@ -35,9 +31,6 @@ import { bindActionCreators } from 'redux';
 interface MainProps {
   quizzes: QuizzesState;
   txWaitingConfirmationAction(args: { isWaitingTxConfirmation: boolean }): void;
-  // quizId: string;
-  //quiz: IQuiz;
-  //quizContractId: string;
 }
 
 const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
@@ -59,7 +52,6 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
     return <Spin spinning={true} />;
   }
 
-  /** on-mount (get quiz details by userId)*/
   useEffect(() => {
     if (!quizzes?.name) {
       message.error('Please connect the wallet first!', 3);
@@ -69,7 +61,7 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
       if (chainId == null) {
         return;
       }
-      // const contract = getQuizAppContract(chainId);
+
       const quizDetails =
         await QuizApiService.getInstance().getContractQuizById(quizContractId);
 
@@ -106,7 +98,6 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
 
     const chainId: number = quizzes.surname;
     const quizAppContract = getQuizAppContract(chainId);
-    //    const rewards = ethers.utils.parseEther('1');
 
     const questions: IQuestionReq[] = [];
     for (const el of values.questions) {
@@ -130,8 +121,6 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
         );
       }
 
-      // answers = shuffleArray(answers);
-
       questions.push({
         answers,
         question: el.question,
@@ -145,10 +134,6 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
       },
     };
 
-    // const response = await fetch(`${nextServerAPI}/create-quiz`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(payload),
-    // }).then((res) => res.json());
     const responseCid = await QuizApiService.getInstance().createQuiz(payload);
 
     if (responseCid == null) {
@@ -168,7 +153,7 @@ const EditQuiz: FC<MainProps> = ({ quizzes, txWaitingConfirmationAction }) => {
       setLoading(false);
       message.error('Error submitting transaction!', 3);
     }
-    // form.resetFields();
+
     return setLoading(false);
   };
 

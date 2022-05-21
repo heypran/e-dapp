@@ -1,15 +1,11 @@
 import { FC, useEffect } from 'react';
-import QuizCard from '../../components/quiz-card/quiz-card';
 import { Button, Col, message, Row, Spin, Tooltip, Typography } from 'antd';
-import QuizApiService from '../../services/quizApi';
-import { IQuiz } from '../../types';
-import Head from 'next/head';
+
 import {
   HomeOutlined,
   EditFilled,
   UndoOutlined,
   DollarCircleFilled,
-  DollarTwoTone,
   IdcardFilled,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -151,26 +147,6 @@ const NavBar: FC<MainProps> = ({
           )}
           <HomeWalletConnect />
         </Row>
-        {/* <Row>
-          <Col>
-            <Button
-              icon={<DollarTwoTone />}
-              onClick={handleReloadQuizzes}
-              type={'ghost'}
-              style={{ marginRight: '24px' }}
-            >
-              Redeem Rewards
-            </Button>
-            <Typography.Title
-              level={4}
-              style={{ textAlign: 'center' }}
-              className={'controls-text'}
-            >
-              0.2 Matic
-            </Typography.Title>
-          </Col>
-          <HomeWalletConnect />
-        </Row> */}
       </Col>
     </Row>
   );
@@ -185,5 +161,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
-
-// export default NavBar;

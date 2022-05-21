@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getQuizAppContract } from './contractHelpers';
 
 export const useGetUserScoreByQuizId = (

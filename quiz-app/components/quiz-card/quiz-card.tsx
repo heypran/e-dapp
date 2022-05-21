@@ -12,7 +12,6 @@ import {
 
 import { FC, useState } from 'react';
 import { IQuiz } from '../../types';
-import { getRandomEmoji } from '../../utils';
 import { useRouter } from 'next/router';
 import { QuizzesState } from '../../store/quizzes/reducer';
 import { connect } from 'react-redux';
@@ -21,15 +20,10 @@ import { truncateAddress } from '../../utils/wallet';
 import Link from 'next/link';
 import { useGetUserScoreByQuizId } from '../../hooks/useGetUserScoreByQuizId';
 import { getQuizAppContract } from '../../hooks/contractHelpers';
-import { ethers, providers } from 'ethers';
+import { providers } from 'ethers';
 import { getDappCurrencySymbol } from '../../config/dapp-config';
 import { useGetUserQuizAnswers } from '../../hooks/useGetUserQuizAnswers';
-import {
-  SmileTwoTone,
-  HeartTwoTone,
-  CheckOutlined,
-  CheckCircleTwoTone,
-} from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { txWaitingConfirmationAction } from '../../store/quizzes/actions';
 
@@ -51,10 +45,9 @@ const QuizCard: FC<MainProps> = ({
   title,
   quizCid,
   quizId,
-  questions_count,
   rewards,
   attemptedCount,
-  quizzes,
+
   endTime,
   isActive,
   creator,

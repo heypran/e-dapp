@@ -1,5 +1,3 @@
-import { IUser } from '../../types';
-import { nextServerAPI } from '../../config/constants';
 import { IQuestionAnswer } from './reducer';
 
 export enum quizzesActionTypes {

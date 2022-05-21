@@ -1,12 +1,7 @@
 {
-  "name": "zk-block",
+  "name": "quiz-dapp",
   "version": "0.0.1",
-  "description": "Sample solidity contracts, zk-SNARK circuits, and test scripts for the zero-knowledge proofs.",
-  "homepage": "https://github.com/heypran/zk-block.git#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/heypran/zk-block.git"
-  },
+  "description": "",
   "scripts": {
     "start": "hardhat node",
     "compile": "hardhat compile",

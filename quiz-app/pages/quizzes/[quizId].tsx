@@ -49,14 +49,6 @@ const Quiz: FC<MainProps> = ({ quiz, quizId, quizzes, quizContractId }) => {
       if (response == null) {
         message.error('Error getting quiz details for current user: ');
       } else {
-        // const formatQuestions: any = response.questions.map((question) => {
-        //   const answer = question.answers;
-        //   const formatted = {};
-        //   question.answers.forEach((ans, i) => {
-        //     formatted[`answer${i + 1}`] = ans;
-        //   });
-        //   return { ...question, ...formatted };
-        // });
         setQuizDetailsByUser(response.questions);
         setQuizDetails(quizDetails);
         setUserAnswers(response.questions.map((a) => 0));
@@ -180,28 +172,17 @@ const Quiz: FC<MainProps> = ({ quiz, quizId, quizzes, quizContractId }) => {
   );
 };
 
-/**
- * Generate on build time the pages for quizzes
- * */
 export const getStaticPaths = async () => {
-  // const quizzes = await QuizApiService.getInstance().getAllQuizzesByCid();
-
   const paths = [].map((_) => ({
     params: {},
   }));
 
-  // const paths = quizzes.map((q) => ({
-  //   params: { quizId: `${q.quizCid}-${q.quizId}` },
-  // }));
   return {
     paths: paths,
     fallback: 'blocking',
   };
 };
 
-/**
- * On build get the props for each quiz
- */
 export const getStaticProps = async ({
   params,
 }: {

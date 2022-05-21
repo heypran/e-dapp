@@ -1,5 +1,5 @@
 import QuizApiService from '../services/quizApi';
-import { IQuestion, IQuestionFrom, IQuiz } from '../types';
+import { IQuestion, IQuiz } from '../types';
 import QuestionCard from '../components/question-card/question-card';
 import { Alert, Button, Col, message, Row, Spin, Typography } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
@@ -65,14 +65,6 @@ const QuizAttempt: FC<MainProps> = ({
         message.error('Error getting quiz details for current user: ');
         setQuizLoading(false);
       } else {
-        // const formatQuestions: any = response.questions.map((question) => {
-        //   const answer = question.answers;
-        //   const formatted = {};
-        //   question.answers.forEach((ans, i) => {
-        //     formatted[`answer${i + 1}`] = ans;
-        //   });
-        //   return { ...question, ...formatted };
-        // });
         if (userAlreadyAttempted.filter((n) => n != 0).length > 0) {
           setUserAlreadyAttemptedAnswers(userAlreadyAttempted);
         }

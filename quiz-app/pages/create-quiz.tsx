@@ -10,24 +10,20 @@ import {
   Input,
   message,
   Row,
-  Select,
   Space,
   Typography,
 } from 'antd';
 import { DeleteOutlined, SendOutlined, CopyOutlined } from '@ant-design/icons';
-import { nextServerAPI, QUIZ_LENGTH } from '../config/constants';
+import { QUIZ_LENGTH } from '../config/constants';
 import { connect } from 'react-redux';
 import { QuizzesState } from '../store/quizzes/reducer';
 import { useRouter } from 'next/router';
-import { shuffleArray } from '../utils';
-import { IQuestion, IQuestionFrom, IQuestionReq } from '../types';
+import { IQuestionFrom, IQuestionReq } from '../types';
 import QuizApiService from '../services/quizApi';
 import { useWalletContext } from '../components/WalletContext';
 import { getQuizAppContract } from '../hooks/contractHelpers';
 import { ethers } from 'ethers';
 import NavBar from '../components/nav-bar/nav-bar';
-import { networkConfig } from '../config/network';
-import { toHex } from '../utils/wallet';
 import { useGetBlockExplorer } from '../hooks/useGetBlockExplorer';
 import { txWaitingConfirmationAction } from '../store/quizzes/actions';
 import { bindActionCreators } from 'redux';
@@ -309,16 +305,6 @@ const CreateQuiz: FC<MainProps> = ({
                   }
                   description={
                     <div style={{ fontSize: 13 }}>
-                      {/* <span>
-                        * Correct answer will be automatically added to question
-                        options
-                      </span> */}
-                      {/* <br />
-                      <span>
-                        * Two additional question answers are required (a, b -
-                        required and c,d - optional)
-                      </span>
-                      <br /> */}
                       <br />
                       <span>
                         * The new quiz will appear in MY QUIZZES list in a few
@@ -391,22 +377,7 @@ const CreateQuiz: FC<MainProps> = ({
                                 disabled={fields.length === 1}
                               />
                             </Col>
-                            {/* <Col span={24}>
-                              <Form.Item
-                                {...restField}
-                                name={[name, 'correct_answer']}
-                                rules={[
-                                  {
-                                    required: true,
-                                    message: 'Missing correct answer',
-                                  },
-                                ]}
-                                wrapperCol={{ span: 24 }}
-                                style={{ marginBottom: 0 }}
-                              >
-                                <Input placeholder={'Correct answer'} />
-                              </Form.Item>
-                            </Col> */}
+
                             <Col lg={12} xs={24}>
                               <Form.Item
                                 {...restField}
@@ -552,7 +523,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateQuiz);
 
+// For testing
 // bafybeigwrczyc44fzquvbbnm5jsnmthjsieebdcf6zwlivpnpurmasflci
 // bafybeicbv3pjrmkx7vy27puybjitqibzo6r5hrlc2exp6jh4kf4ijhpaqe
-
 // bafybeic6pg7exkydaz4rfpdpheofd3gxdhlpzcrsmidhd7zex4hyuqyv6a

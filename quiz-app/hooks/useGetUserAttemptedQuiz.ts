@@ -1,7 +1,5 @@
-import { ethers } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuizApiService from '../services/quizApi';
-import { getQuizAppContract } from './contractHelpers';
 
 export const useGetUserQuizIds = (
   user?: string,

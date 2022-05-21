@@ -4,16 +4,9 @@ import { Button, Col, message, Row, Tooltip, Typography } from 'antd';
 import QuizApiService from '../../services/quizApi';
 import { IQuiz } from '../../types';
 import Head from 'next/head';
-import {
-  HomeOutlined,
-  PlusOutlined,
-  PlusSquareOutlined,
-  UndoOutlined,
-} from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import NavBar from '../../components/nav-bar/nav-bar';
 import { useWalletContext } from '../../components/WalletContext';
-
 import { useGetUserQuizIds } from '../../hooks/useGetUserAttemptedQuiz';
 
 interface MainProps {
@@ -102,7 +95,6 @@ const Quizzes: FC<MainProps> = () => {
                   connectedAccount={account}
                   chainId={chainId}
                   provider={provider}
-                  // routeTo={`/quizzes/${q.quizCid}-${q.quizId}`}
                   routeTo='/quiz-attempt'
                   queryParams={{
                     quizCidContractId: `${q.quizCid}-${q.quizId}`,
@@ -119,14 +111,5 @@ const Quizzes: FC<MainProps> = () => {
     </>
   );
 };
-
-// export const getStaticProps = async (context) => {
-//   const quizzes = await QuizApiService.getInstance().getAllQuizzesByCid();
-
-//   return {
-//     props: { quizzes },
-//     revalidate: 10,
-//   };
-// };
 
 export default Quizzes;

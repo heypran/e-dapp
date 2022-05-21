@@ -1,5 +1,3 @@
-# Zk-Block
-
 ### Getting started
 
 Create a file `private.json` ( refer `private.example.json` ) inside `backend` folder and add your private key.

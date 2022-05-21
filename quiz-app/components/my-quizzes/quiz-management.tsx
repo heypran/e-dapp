@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import QuizCard from '../../components/quiz-card/quiz-card';
 import {
   Button,
   Card,
@@ -12,23 +11,15 @@ import {
   Space,
   Statistic,
   TimePicker,
-  Tooltip,
   Typography,
 } from 'antd';
-import QuizApiService from '../../services/quizApi';
-import { IQuestion, IQuestionFrom, IQuiz } from '../../types';
-import Head from 'next/head';
-import {
-  HomeOutlined,
-  PlusOutlined,
-  PlusSquareOutlined,
-  UndoOutlined,
-} from '@ant-design/icons';
+
+import { IQuestionFrom, IQuiz } from '../../types';
+
 import { useRouter } from 'next/router';
-import HomeWalletConnect from '../home-wallet-connect/home-wallet-connect';
 import { useWalletContext } from '../WalletContext';
 import { getQuizAppContract } from '../../hooks/contractHelpers';
-import { mapNumToOption, mapOptionToNum } from '../../utils';
+import { mapOptionToNum } from '../../utils';
 import moment from 'moment';
 import { getDappCurrencySymbol } from '../../config/dapp-config';
 import { ethers } from 'ethers';
@@ -280,5 +271,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuizManagement);
-
-// export default QuizManagement;

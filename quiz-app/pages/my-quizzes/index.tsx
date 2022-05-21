@@ -37,8 +37,6 @@ const MyQuizzes: FC<MainProps> = () => {
       });
   }, [account, chainId]);
 
-  const handleReloadQuizzes = () => router.reload();
-
   const isConnected = account != null && chainId != null && provider != null;
   return (
     <>
@@ -94,7 +92,6 @@ const MyQuizzes: FC<MainProps> = () => {
                 queryParams={{
                   quizCidContractId: `${q.quizCid}-${q.quizId}`,
                 }}
-                // routeTo={`/my-quizzes/${q.quizCid}-${q.quizId}`}
                 ctaText='Manage'
                 connectedAccount={account}
                 chainId={chainId}
@@ -106,14 +103,5 @@ const MyQuizzes: FC<MainProps> = () => {
     </>
   );
 };
-
-// export const getStaticProps = async (context) => {
-//   const quizzes = await QuizApiService.getInstance().getAllQuizzesByCid();
-
-//   return {
-//     props: { quizzes },
-//     revalidate: 10,
-//   };
-// };
 
 export default MyQuizzes;

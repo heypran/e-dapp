@@ -1,14 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Button, Col, Row, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import { HomeActionCard } from '../components';
-import { useWalletContext } from '../components/WalletContext';
 import WalletConnectComponent from '../components/home-wallet-connect/home-wallet-connect';
 
 require('../styles/home-page.less');
 
 const Home: NextPage = () => {
-  // const { account } = useWalletContext();
   return (
     <>
       <Head>
